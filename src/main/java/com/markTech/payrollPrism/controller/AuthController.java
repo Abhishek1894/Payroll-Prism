@@ -1,7 +1,9 @@
 package com.markTech.payrollPrism.controller;
 
-import com.markTech.payrollPrism.customExceptions.InvalidCredentialsException;
+import com.markTech.payrollPrism.DTO.EmployeeCredDTO;
 import com.markTech.payrollPrism.model.Employee;
+import com.markTech.payrollPrism.model.EmployeeInfo;
+import com.markTech.payrollPrism.service.EmployeeInfoService;
 import com.markTech.payrollPrism.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,6 +17,10 @@ public class AuthController
     @Autowired
     EmployeeService employeeService;
 
+    @Autowired
+    EmployeeInfoService employeeInfoService;
+
+
     @GetMapping("/")
     public String greet()
     {
@@ -22,15 +28,23 @@ public class AuthController
     }
 
     @PostMapping("/auth/register")
-    public ResponseEntity<?> registerEmployee(@RequestBody Employee employee)
+    public ResponseEntity<EmployeeCredDTO> registerEmployee(@RequestBody Employee employee)
     {
+        // saving employee cred
         Employee e = employeeService.registerEmployee(employee);
 
-        return new ResponseEntity<>(e, HttpStatus.CREATED);
+        // saving employee info
+        EmployeeInfo employeeInfo = new EmployeeInfo(e.getId());
+        employeeInfoService.registerEmployeeInfo(employeeInfo);
+
+        // sending custom data to client without including password using dto.
+        EmployeeCredDTO employeeCredDTO = new EmployeeCredDTO(e.getId(), e.getFirstName(), e.getLastName(), e.getEmail());
+
+        return new ResponseEntity<>(employeeCredDTO, HttpStatus.CREATED);
     }
 
     @PostMapping("/auth/signIn")
-    public ResponseEntity<?> signIn(@RequestBody Employee employee)
+    public ResponseEntity<String> signIn(@RequestBody Employee employee)
     {
         try
         {

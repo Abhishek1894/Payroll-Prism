@@ -49,4 +49,9 @@ public class EmployeeService
         System.out.println("Throwing exception");
         throw new InvalidCredentialsException();
     }
+
+    public Employee getEmployee(long id)
+    {
+        return employeeRepository.findById(id).orElse(null);
+    }
 }
