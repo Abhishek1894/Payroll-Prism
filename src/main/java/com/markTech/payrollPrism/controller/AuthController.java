@@ -2,8 +2,6 @@ package com.markTech.payrollPrism.controller;
 
 import com.markTech.payrollPrism.DTO.EmployeeCredDTO;
 import com.markTech.payrollPrism.model.Employee;
-import com.markTech.payrollPrism.model.EmployeeInfo;
-import com.markTech.payrollPrism.service.EmployeeInfoService;
 import com.markTech.payrollPrism.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,9 +15,6 @@ public class AuthController
     @Autowired
     EmployeeService employeeService;
 
-    @Autowired
-    EmployeeInfoService employeeInfoService;
-
 
     @GetMapping("/")
     public String greet()
@@ -32,10 +27,6 @@ public class AuthController
     {
         // saving employee cred
         Employee e = employeeService.registerEmployee(employee);
-
-        // saving employee info
-        EmployeeInfo employeeInfo = new EmployeeInfo(e.getId());
-        employeeInfoService.registerEmployeeInfo(employeeInfo);
 
         // sending custom data to client without including password using dto.
         EmployeeCredDTO employeeCredDTO = new EmployeeCredDTO(e.getId(), e.getFirstName(), e.getLastName(), e.getEmail());

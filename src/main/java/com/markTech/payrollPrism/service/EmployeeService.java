@@ -28,6 +28,7 @@ public class EmployeeService
 
     public Employee registerEmployee(Employee employee)
     {
+        // employee.setEmployee(null);
         employee.setPassword(encoder.encode(employee.getPassword()));
         return employeeRepository.save(employee);
     }
@@ -53,5 +54,71 @@ public class EmployeeService
     public Employee getEmployee(long id)
     {
         return employeeRepository.findById(id).orElse(null);
+    }
+
+    public Employee updateEmployee(Employee employee)
+    {
+        Employee emp = employeeRepository.findById(employee.getId()).orElse(null);
+
+        if(emp == null)
+            return null;
+
+        if(employee.getFirstName() != null)
+            emp.setFirstName(employee.getFirstName());
+
+        if(employee.getLastName() != null)
+            emp.setLastName(employee.getLastName());
+
+        if(employee.getEmail() != null)
+            emp.setEmail(employee.getEmail());
+
+        if(employee.isActive() != emp.isActive())
+            emp.setActive(employee.isActive());
+
+        if(employee.getRole() != null)
+            emp.setRole(employee.getRole());
+
+        if(employee.getContactNo() != null)
+            emp.setContactNo(employee.getContactNo());
+
+        if(employee.getGender() != null)
+            emp.setGender(employee.getGender());
+
+        if(employee.getBankAccNo() != null)
+            emp.setBankAccNo(employee.getBankAccNo());
+
+        if(employee.getBusinessUnit() != null)
+            emp.setBusinessUnit(employee.getBusinessUnit());
+
+        if(employee.getBankName() != null)
+            emp.setBankName(employee.getBankName());
+
+        // so on
+
+        employeeRepository.save(emp);
+        return employee;
+    }
+
+
+    public Employee deleteEmployee(long id)
+    {
+        Employee emp = employeeRepository.findById(id).orElse(null);
+
+        if(emp == null)
+            return null;
+
+        employeeRepository.deleteById(id);
+        return emp;
+    }
+
+    public Employee deactivateEmployee(long id)
+    {
+        Employee emp = employeeRepository.findById(id).orElse(null);
+
+        if(emp == null)
+            return null;
+
+        int val = employeeRepository.deactivateById(id);
+        return emp;
     }
 }

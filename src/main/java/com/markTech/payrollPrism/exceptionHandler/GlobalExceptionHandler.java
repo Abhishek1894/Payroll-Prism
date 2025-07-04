@@ -21,7 +21,8 @@ public class GlobalExceptionHandler
         Throwable cause = ex.getCause();
         String message = "Data integrity error";
 
-        if (cause instanceof ConstraintViolationException cve) {
+        if (cause instanceof ConstraintViolationException cve)
+        {
             String constraint = cve.getConstraintName();  // e.g., "user_email_key" or "email_UNIQUE"
             if (duplicateEmailConstraint.equals(constraint))
             {

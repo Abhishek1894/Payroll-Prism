@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Date;
+
 
 @Entity
 @Data
@@ -14,7 +16,8 @@ import lombok.Setter;
 public class Employee
 {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "employee_seq_gen")
+    @SequenceGenerator(name = "employee_seq_gen", sequenceName = "employee_seq", allocationSize = 1)
     private Long id;
 
     @Column(nullable = false)
@@ -34,5 +37,25 @@ public class Employee
 
     @Column(nullable = false)
     private boolean active;
+
+
+    private String contactNo;
+    private String businessUnit;
+    private String designation;
+    private String location;
+    private String gender;
+
+    private Date dateOfBirth;
+    private Date dateOfJoining;
+
+    private String bankName;
+    private String bankAccNo;
+    private String panNo;
+    private String esiNo;
+    private String prnNo;
+
+    @ManyToOne
+    @JoinColumn(name = "manager_id", nullable = true)
+    Employee employee;
 
 }
