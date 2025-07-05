@@ -10,7 +10,7 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class EmployeeDetailDTO
+public class EmployeeDTO
 {
     long id;
 
@@ -35,7 +35,7 @@ public class EmployeeDetailDTO
 
     private long managerId;
 
-    public EmployeeDetailDTO(Employee employee)
+    public EmployeeDTO(Employee employee)
     {
         this.id = employee.getId();
         this.firstName = employee.getFirstName();
@@ -54,6 +54,6 @@ public class EmployeeDetailDTO
         this.esiNo = employee.getEsiNo();
         this.prnNo = employee.getPrnNo();
 
-        this.managerId = employee.getEmployee() == null ? 0 : employee.getEmployee().getId();
+        this.managerId = employee.getManager() == null ? 0 : employee.getManager().getId();
     }
 }

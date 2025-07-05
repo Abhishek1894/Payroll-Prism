@@ -1,6 +1,7 @@
 package com.markTech.payrollPrism.controller;
 
 import com.markTech.payrollPrism.DTO.EmployeeCredDTO;
+import com.markTech.payrollPrism.DTO.EmployeeDTO;
 import com.markTech.payrollPrism.model.Employee;
 import com.markTech.payrollPrism.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,12 +27,9 @@ public class AuthController
     public ResponseEntity<EmployeeCredDTO> registerEmployee(@RequestBody Employee employee)
     {
         // saving employee cred
-        Employee e = employeeService.registerEmployee(employee);
+         EmployeeCredDTO e = employeeService.registerEmployee(employee);
 
-        // sending custom data to client without including password using dto.
-        EmployeeCredDTO employeeCredDTO = new EmployeeCredDTO(e.getId(), e.getFirstName(), e.getLastName(), e.getEmail());
-
-        return new ResponseEntity<>(employeeCredDTO, HttpStatus.CREATED);
+        return new ResponseEntity<>(e, HttpStatus.CREATED);
     }
 
     @PostMapping("/auth/signIn")

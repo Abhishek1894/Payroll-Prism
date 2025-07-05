@@ -56,6 +56,6 @@ public class Employee
 
     @ManyToOne
     @JoinColumn(name = "manager_id", nullable = true)
-    Employee employee;
+    Employee manager;
 
 }

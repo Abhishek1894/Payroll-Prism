@@ -1,5 +1,8 @@
 package com.markTech.payrollPrism.service;
 
+import com.markTech.payrollPrism.DTO.EmployeeBasicInfoDTO;
+import com.markTech.payrollPrism.DTO.EmployeeCredDTO;
+import com.markTech.payrollPrism.DTO.EmployeeDTO;
 import com.markTech.payrollPrism.customExceptions.InvalidCredentialsException;
 import com.markTech.payrollPrism.model.Employee;
 import com.markTech.payrollPrism.repository.EmployeeRepository;
@@ -10,6 +13,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -24,21 +28,37 @@ public class EmployeeService
     @Autowired
     JwtService jwtService;
 
+    // password encoder; IMP
     private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
 
-    public Employee registerEmployee(Employee employee)
+    // service to register the employees for first time
+    public EmployeeCredDTO registerEmployee(Employee employee)
     {
         // employee.setEmployee(null);
         employee.setPassword(encoder.encode(employee.getPassword()));
-        return employeeRepository.save(employee);
+        Employee emp = employeeRepository.save(employee);
+        return new EmployeeCredDTO(emp.getId(), emp.getFirstName(), emp.getLastName(), emp.getEmail());
     }
 
-    public List<Employee> getEmployees()
+    // service to get list of all the employees
+    public List<EmployeeDTO> getEmployees()
     {
-        return employeeRepository.findAll();
+        List<Employee> employees = employeeRepository.findAll();
+        List<EmployeeDTO> array = new ArrayList<>();
+
+        for(Employee employee : employees)
+            array.add(new EmployeeDTO(employee));
+
+        return array;
     }
 
+    // service for getting the basic information of the employee
+    public List<EmployeeBasicInfoDTO> getEmployeeBasicInfo()
+    {
+        return employeeRepository.getEmployeeBasicInfo();
+    }
 
+    // used for authenticating the user and giving the token in return; IMP
     public String verify(Employee employee) throws InvalidCredentialsException
     {
         Authentication authentication;
@@ -51,12 +71,16 @@ public class EmployeeService
         throw new InvalidCredentialsException();
     }
 
-    public Employee getEmployee(long id)
+
+    // service for getting the employees based on id
+    public EmployeeDTO getEmployee(long id)
     {
-        return employeeRepository.findById(id).orElse(null);
+        Employee employee = employeeRepository.findById(id).orElse(null);
+
+        return employee == null ? null : new EmployeeDTO(employee);
     }
 
-    public Employee updateEmployee(Employee employee)
+    public EmployeeDTO updateEmployee(Employee employee)
     {
         Employee emp = employeeRepository.findById(employee.getId()).orElse(null);
 
@@ -96,11 +120,12 @@ public class EmployeeService
         // so on
 
         employeeRepository.save(emp);
-        return employee;
+        return new EmployeeDTO(emp);
     }
 
 
-    public Employee deleteEmployee(long id)
+    // service for deleting the employees
+    public EmployeeDTO deleteEmployee(long id)
     {
         Employee emp = employeeRepository.findById(id).orElse(null);
 
@@ -108,10 +133,11 @@ public class EmployeeService
             return null;
 
         employeeRepository.deleteById(id);
-        return emp;
+        return new EmployeeDTO(emp);
     }
 
-    public Employee deactivateEmployee(long id)
+    // service for deactivating the employees
+    public EmployeeDTO deactivateEmployee(long id)
     {
         Employee emp = employeeRepository.findById(id).orElse(null);
 
@@ -119,6 +145,7 @@ public class EmployeeService
             return null;
 
         int val = employeeRepository.deactivateById(id);
-        return emp;
+        return new EmployeeDTO(emp);
     }
+
 }

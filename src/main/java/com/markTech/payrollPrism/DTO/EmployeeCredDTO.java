@@ -9,8 +9,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class EmployeeCredDTO
 {
-    private long id;
-    private String firstName;
-    private String lastName;
-    private String email;
+    long id;
+    String firstName;
+    String lastName;
+    String email;
+
 }
