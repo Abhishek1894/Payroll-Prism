@@ -36,6 +36,9 @@ public class EmployeeService
     {
         // employee.setEmployee(null);
         employee.setPassword(encoder.encode(employee.getPassword()));
+        Employee defaultManager = new Employee();
+        defaultManager.setId(1017L);
+        employee.setManager(defaultManager);
         Employee emp = employeeRepository.save(employee);
         return new EmployeeCredDTO(emp.getId(), emp.getFirstName(), emp.getLastName(), emp.getEmail());
     }
@@ -117,10 +120,9 @@ public class EmployeeService
         if(employee.getBankName() != null)
             emp.setBankName(employee.getBankName());
 
-        // so on
+        Employee savedEmployee = employeeRepository.save(emp);
 
-        employeeRepository.save(emp);
-        return new EmployeeDTO(emp);
+        return new EmployeeDTO(savedEmployee);
     }
 
 
@@ -148,4 +150,8 @@ public class EmployeeService
         return new EmployeeDTO(emp);
     }
 
+    public EmployeeBasicInfoDTO getEmployeeBasicInfoById(long id)
+    {
+        return employeeRepository.getEmployeeBasicInfoById(id);
+    }
 }

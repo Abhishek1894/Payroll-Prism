@@ -41,8 +41,14 @@ public class EmployeeController
     public ResponseEntity<List<EmployeeBasicInfoDTO>> getEmployeeBasicInfo()
     {
         List<EmployeeBasicInfoDTO> list = employeeService.getEmployeeBasicInfo();
-
         return new ResponseEntity<>(list, HttpStatus.OK);
+    }
+
+    @GetMapping("/employee/basicInfo/{id}")
+    public ResponseEntity<EmployeeBasicInfoDTO> getEmployeeBasicInfoById(@PathVariable long id)
+    {
+        EmployeeBasicInfoDTO e = employeeService.getEmployeeBasicInfoById(id);
+        return e == null ? new ResponseEntity<>(HttpStatus.NOT_FOUND) : new ResponseEntity<>(e, HttpStatus.OK);
     }
 
 

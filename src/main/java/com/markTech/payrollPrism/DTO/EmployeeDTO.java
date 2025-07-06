@@ -33,7 +33,7 @@ public class EmployeeDTO
     private String esiNo;
     private String prnNo;
 
-    private long managerId;
+    EmployeeBasicInfoDTO manager;
 
     public EmployeeDTO(Employee employee)
     {
@@ -54,6 +54,7 @@ public class EmployeeDTO
         this.esiNo = employee.getEsiNo();
         this.prnNo = employee.getPrnNo();
 
-        this.managerId = employee.getManager() == null ? 0 : employee.getManager().getId();
+        if(employee.getManager() != null)
+            this.manager = new EmployeeBasicInfoDTO(employee.getManager());
     }
 }
