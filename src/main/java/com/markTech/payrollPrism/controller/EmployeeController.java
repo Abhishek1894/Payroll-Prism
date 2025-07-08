@@ -1,7 +1,7 @@
 package com.markTech.payrollPrism.controller;
 
-import com.markTech.payrollPrism.DTO.EmployeeBasicInfoDTO;
-import com.markTech.payrollPrism.DTO.EmployeeDTO;
+import com.markTech.payrollPrism.DTO.EmployeeRelatedDTOS.EmployeeBasicInfoDTO;
+import com.markTech.payrollPrism.DTO.EmployeeRelatedDTOS.EmployeeDTO;
 import com.markTech.payrollPrism.model.Employee;
 import com.markTech.payrollPrism.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;

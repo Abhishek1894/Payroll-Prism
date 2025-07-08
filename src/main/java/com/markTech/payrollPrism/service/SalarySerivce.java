@@ -1,5 +1,6 @@
 package com.markTech.payrollPrism.service;
-import com.markTech.payrollPrism.DTO.SalaryDTO;
+import com.markTech.payrollPrism.DTO.SalaryRelatedDTOS.SalaryDTO;
+import com.markTech.payrollPrism.DTO.SalaryRelatedDTOS.SalaryResponseDTO;
 import com.markTech.payrollPrism.customExceptions.ApplicationException;
 import com.markTech.payrollPrism.customExceptions.InvalidFileException;
 import com.markTech.payrollPrism.model.Employee;
@@ -7,16 +8,11 @@ import com.markTech.payrollPrism.model.Salary;
 import com.markTech.payrollPrism.repository.EmployeeRepository;
 import com.markTech.payrollPrism.repository.SalaryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.text.DateFormat;
-import java.time.Month;
-import java.time.Year;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -135,5 +131,11 @@ public class SalarySerivce
 
         return true;
 
+    }
+
+
+    public List<SalaryResponseDTO> getSalary(long employeeId)
+    {
+        return salaryRepository.findSalaryById(employeeId);
     }
 }

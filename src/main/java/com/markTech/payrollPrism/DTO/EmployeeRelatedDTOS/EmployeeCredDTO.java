@@ -1,4 +1,4 @@
-package com.markTech.payrollPrism.DTO;
+package com.markTech.payrollPrism.DTO.EmployeeRelatedDTOS;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

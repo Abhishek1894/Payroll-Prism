@@ -1,8 +1,8 @@
 package com.markTech.payrollPrism.service;
 
-import com.markTech.payrollPrism.DTO.EmployeeBasicInfoDTO;
-import com.markTech.payrollPrism.DTO.EmployeeCredDTO;
-import com.markTech.payrollPrism.DTO.EmployeeDTO;
+import com.markTech.payrollPrism.DTO.EmployeeRelatedDTOS.EmployeeBasicInfoDTO;
+import com.markTech.payrollPrism.DTO.EmployeeRelatedDTOS.EmployeeCredDTO;
+import com.markTech.payrollPrism.DTO.EmployeeRelatedDTOS.EmployeeDTO;
 import com.markTech.payrollPrism.customExceptions.InvalidCredentialsException;
 import com.markTech.payrollPrism.model.Employee;
 import com.markTech.payrollPrism.repository.EmployeeRepository;
