@@ -1,9 +1,11 @@
 package com.markTech.payrollPrism.controller;
 
+import com.markTech.payrollPrism.DTO.RequestDTOS.IdMonthYearDTO;
 import com.markTech.payrollPrism.DTO.SalaryRelatedDTOS.SalaryResponseDTO;
 import com.markTech.payrollPrism.customExceptions.ApplicationException;
 import com.markTech.payrollPrism.customExceptions.InvalidFileException;
 import com.markTech.payrollPrism.model.Salary;
+import com.markTech.payrollPrism.repository.SalaryRepository;
 import com.markTech.payrollPrism.service.SalarySerivce;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -31,4 +33,18 @@ public class SalaryController
     {
         return new ResponseEntity<>(salarySerivce.getSalary(employeeId), HttpStatus.OK);
     }
+
+    @GetMapping("/salary")
+    public ResponseEntity<?> getSalaryByIdMonthYear(@RequestBody IdMonthYearDTO body) throws ApplicationException
+    {
+        System.out.println("Entered");
+        long id = body.getId();
+        int month = body.getMonth();
+        int year = body.getYear();
+
+
+        return new ResponseEntity<>(salarySerivce.getSalaryByIdMonthYear(id, month, year), HttpStatus.OK);
+    }
+
+
 }

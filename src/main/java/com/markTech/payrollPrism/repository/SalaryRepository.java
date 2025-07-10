@@ -14,4 +14,7 @@ public interface SalaryRepository extends JpaRepository<Salary, Long>
 {
     @Query("SELECT new com.markTech.payrollPrism.DTO.SalaryRelatedDTOS.SalaryResponseDTO(s) from Salary s WHERE s.employee.id = :id")
     public List<SalaryResponseDTO> findSalaryById(@Param("id") long id);
+
+    @Query("SELECT new com.markTech.payrollPrism.DTO.SalaryRelatedDTOS.SalaryResponseDTO(s) from Salary s WHERE s.employee.id = :id AND s.salaryMonth = :month AND s.salaryYear = :year")
+    public List<SalaryResponseDTO> fetchSalaryByIdMonthAndYear(@Param("id") long id,@Param("month") String month, @Param("year") int year);
 }

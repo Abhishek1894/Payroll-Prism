@@ -138,4 +138,37 @@ public class SalarySerivce
     {
         return salaryRepository.findSalaryById(employeeId);
     }
+
+
+    public List<SalaryResponseDTO> getSalaryByIdMonthYear(long id, int month, int year) throws ApplicationException
+    {
+        if(month <= 0 || month >= 13)
+            throw new ApplicationException("Invalid Month");
+
+        String m = getMonthByNumber(month);
+
+        return salaryRepository.fetchSalaryByIdMonthAndYear(id, m, year);
+    }
+
+    // method to get the string month from the numeric year
+    public String getMonthByNumber(int id)
+    {
+        return switch (id)
+        {
+            case 1 -> "JANUARY";
+            case 2 -> "FEBRUARY";
+            case 3 -> "MARCH";
+            case 4 -> "APRIL";
+            case 5 -> "MAY";
+            case 6 -> "JUNE";
+            case 7 -> "JULY";
+            case 8 -> "AUGUST";
+            case 9 -> "SEPT";
+            case 10 -> "OCTOBER";
+            case 11 -> "NOVEMBER";
+            case 12 -> "DECEMBER";
+            default -> null;
+        };
+
+    }
 }
