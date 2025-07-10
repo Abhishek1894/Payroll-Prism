@@ -1,6 +1,7 @@
 package com.markTech.payrollPrism.repository;
 
 import com.markTech.payrollPrism.DTO.EmployeeRelatedDTOS.EmployeeBasicInfoDTO;
+import com.markTech.payrollPrism.DTO.EmployeeRelatedDTOS.EmployeeDTO;
 import com.markTech.payrollPrism.model.Employee;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -28,4 +29,5 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long>
 
     @Query("SELECT new com.markTech.payrollPrism.DTO.EmployeeRelatedDTOS.EmployeeBasicInfoDTO(e.id, e.firstName, e.lastName, e.email) from Employee e WHERE e.id = :id")
     EmployeeBasicInfoDTO getEmployeeBasicInfoById(@Param("id") long id);
+
 }

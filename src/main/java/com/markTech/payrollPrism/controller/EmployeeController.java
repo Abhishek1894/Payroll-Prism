@@ -19,9 +19,9 @@ public class EmployeeController
 
 
     @GetMapping("/employee")
-    public ResponseEntity<List<EmployeeDTO>> getEmployees()
+    public ResponseEntity<List<EmployeeDTO>> getEmployees(@RequestParam(defaultValue = "0") int offset, @RequestParam(defaultValue = "10") int limit)
     {
-        return new ResponseEntity<>(employeeService.getEmployees(), HttpStatus.OK);
+        return new ResponseEntity<>(employeeService.getEmployees(offset, limit), HttpStatus.OK);
     }
 
 

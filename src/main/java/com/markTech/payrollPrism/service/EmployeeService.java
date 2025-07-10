@@ -6,6 +6,7 @@ import com.markTech.payrollPrism.DTO.EmployeeRelatedDTOS.EmployeeDTO;
 import com.markTech.payrollPrism.customExceptions.InvalidCredentialsException;
 import com.markTech.payrollPrism.model.Employee;
 import com.markTech.payrollPrism.repository.EmployeeRepository;
+import org.hibernate.id.IncrementGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -44,15 +45,21 @@ public class EmployeeService
     }
 
     // service to get list of all the employees
-    public List<EmployeeDTO> getEmployees()
+    public List<EmployeeDTO> getEmployees(int offset, int limit)
     {
         List<Employee> employees = employeeRepository.findAll();
-        List<EmployeeDTO> array = new ArrayList<>();
+        List<EmployeeDTO> response = new ArrayList<>();
 
-        for(Employee employee : employees)
-            array.add(new EmployeeDTO(employee));
+        int count = 0;
+        int start = offset;
+        while(start < employees.size() && count < limit)
+        {
+            response.add(new EmployeeDTO(employees.get(start)));
+            start++;
+            count++;
+        }
 
-        return array;
+        return response;
     }
 
     // service for getting the basic information of the employee
