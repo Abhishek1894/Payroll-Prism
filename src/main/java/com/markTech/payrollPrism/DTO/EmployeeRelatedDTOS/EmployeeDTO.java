@@ -18,6 +18,7 @@ public class EmployeeDTO
     String lastName;
     String email;
 
+    private byte[] profileImage;
     private String contactNo;
     private String businessUnit;
     private String designation;
@@ -53,6 +54,8 @@ public class EmployeeDTO
         this.panNo = employee.getPanNo();
         this.esiNo = employee.getEsiNo();
         this.prnNo = employee.getPrnNo();
+
+        this.profileImage = employee.getProfileImage();
 
         if(employee.getManager() != null)
             this.manager = new EmployeeBasicInfoDTO(employee.getManager());

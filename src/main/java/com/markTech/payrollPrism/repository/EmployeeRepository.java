@@ -24,10 +24,10 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long>
     int deactivateById(@Param("id") long id);
 
 
-    @Query("SELECT new com.markTech.payrollPrism.DTO.EmployeeRelatedDTOS.EmployeeBasicInfoDTO(e.id, e.firstName, e.lastName, e.email) from Employee e")
+    @Query("SELECT new com.markTech.payrollPrism.DTO.EmployeeRelatedDTOS.EmployeeBasicInfoDTO(e) from Employee e")
     List<EmployeeBasicInfoDTO> getEmployeeBasicInfo();
 
-    @Query("SELECT new com.markTech.payrollPrism.DTO.EmployeeRelatedDTOS.EmployeeBasicInfoDTO(e.id, e.firstName, e.lastName, e.email) from Employee e WHERE e.id = :id")
+    @Query("SELECT new com.markTech.payrollPrism.DTO.EmployeeRelatedDTOS.EmployeeBasicInfoDTO(e) from Employee e WHERE e.id = :id")
     EmployeeBasicInfoDTO getEmployeeBasicInfoById(@Param("id") long id);
 
 }

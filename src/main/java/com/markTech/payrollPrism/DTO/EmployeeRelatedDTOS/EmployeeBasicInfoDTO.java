@@ -13,6 +13,8 @@ public class EmployeeBasicInfoDTO
     String firstName;
     String lastName;
     String email;
+    byte[] profileImage;
+    boolean active;
 
     public EmployeeBasicInfoDTO(Employee employee)
     {
@@ -20,13 +22,8 @@ public class EmployeeBasicInfoDTO
         this.firstName = employee.getFirstName();
         this.lastName = employee.getLastName();
         this.email = employee.getEmail();
+        this.profileImage = employee.getProfileImage();
+        this.active = employee.isActive();
     }
 
-    public EmployeeBasicInfoDTO(long id, String firstName, String lastName, String email)
-    {
-        this.id = id;
-        this.firstName = firstName;
-        this.email = email;
-        this.lastName = lastName;
-    }
 }

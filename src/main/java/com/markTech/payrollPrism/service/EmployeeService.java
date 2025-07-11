@@ -3,7 +3,9 @@ package com.markTech.payrollPrism.service;
 import com.markTech.payrollPrism.DTO.EmployeeRelatedDTOS.EmployeeBasicInfoDTO;
 import com.markTech.payrollPrism.DTO.EmployeeRelatedDTOS.EmployeeCredDTO;
 import com.markTech.payrollPrism.DTO.EmployeeRelatedDTOS.EmployeeDTO;
+import com.markTech.payrollPrism.customExceptions.ApplicationException;
 import com.markTech.payrollPrism.customExceptions.InvalidCredentialsException;
+import com.markTech.payrollPrism.customExceptions.InvalidFileException;
 import com.markTech.payrollPrism.model.Employee;
 import com.markTech.payrollPrism.repository.EmployeeRepository;
 import org.hibernate.id.IncrementGenerator;
@@ -13,7 +15,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -90,7 +94,7 @@ public class EmployeeService
         return employee == null ? null : new EmployeeDTO(employee);
     }
 
-    public EmployeeDTO updateEmployee(Employee employee)
+    public EmployeeDTO updateEmployee(Employee employee) throws IOException,InvalidFileException
     {
         Employee emp = employeeRepository.findById(employee.getId()).orElse(null);
 
@@ -133,7 +137,25 @@ public class EmployeeService
     }
 
 
-    // service for deleting the employees
+    public EmployeeDTO updateEmployeeProfileImage(long id, MultipartFile image) throws InvalidFileException, ApplicationException, IOException
+    {
+        if(image.isEmpty())
+            throw new InvalidFileException("Image not uploaded");
+
+        String contentType = image.getContentType();
+        if(!(contentType.equalsIgnoreCase("image/jpeg") || contentType.equalsIgnoreCase("image/jpg") || contentType.equalsIgnoreCase("image/png")))
+            throw new InvalidFileException("Only jpeg, png and jpg allowed");
+
+        Employee employee = employeeRepository.findById(id).orElse(null);
+        if(employee == null)
+            throw new ApplicationException("Employee with id : " + id + "do not exist");
+
+        employee.setProfileImage(image.getBytes());
+        employee = employeeRepository.save(employee);
+        return new EmployeeDTO(employee);
+    }
+
+    // service for deleting the employees (never used due to join dependency)
     public EmployeeDTO deleteEmployee(long id)
     {
         Employee emp = employeeRepository.findById(id).orElse(null);

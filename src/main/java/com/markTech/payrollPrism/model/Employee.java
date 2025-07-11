@@ -38,6 +38,8 @@ public class Employee
     @Column(nullable = false)
     private boolean active;
 
+    // field to store the profile image of employee
+    private byte[] profileImage;
 
     private String contactNo;
     private String businessUnit;
