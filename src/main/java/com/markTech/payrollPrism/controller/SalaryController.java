@@ -8,6 +8,7 @@ import com.markTech.payrollPrism.model.Salary;
 import com.markTech.payrollPrism.repository.SalaryRepository;
 import com.markTech.payrollPrism.service.SalarySerivce;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,9 +30,9 @@ public class SalaryController
     }
 
     @GetMapping("/salary/{employeeId}")
-    public ResponseEntity<List<SalaryResponseDTO>> getSalary(@PathVariable long employeeId)
+    public ResponseEntity<List<SalaryResponseDTO>> getSalary(@PathVariable long employeeId, @RequestParam(defaultValue = "0") int offset, @RequestParam(defaultValue = "10") int limit)
     {
-        return new ResponseEntity<>(salarySerivce.getSalary(employeeId), HttpStatus.OK);
+        return new ResponseEntity<>(salarySerivce.getSalary(employeeId,offset,limit), HttpStatus.OK);
     }
 
     @GetMapping("/salary")

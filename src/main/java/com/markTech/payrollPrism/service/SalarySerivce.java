@@ -134,9 +134,21 @@ public class SalarySerivce
     }
 
 
-    public List<SalaryResponseDTO> getSalary(long employeeId)
+    public List<SalaryResponseDTO> getSalary(long employeeId, int offset, int limit)
     {
-        return salaryRepository.findSalaryById(employeeId);
+        List<SalaryResponseDTO> list =  salaryRepository.findSalaryById(employeeId);
+        List<SalaryResponseDTO> response = new ArrayList<>();
+
+        int count = 0;
+        int i = offset;
+        while(i < list.size() && count < limit)
+        {
+            response.add(list.get(i));
+            i++;
+            count++;
+        }
+
+        return response;
     }
 
 
